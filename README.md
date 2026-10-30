@@ -129,6 +129,8 @@ The data-structure classes mutate **real pointer structures** (`node.next`, `nod
 
 And it's machine-checked: `test/run.js` loads the same classes the page runs and fuzzes them against mirror models — ~24,000 assertions covering list order and tail integrity after every random operation, ring closure in both directions, hash bucket placement, BST ordering, AVL balance factors and stored heights, and all three red-black invariants after every insert and delete. CI runs the suite on every push (`node test/run.js` locally) and also verifies the committed build output is byte-identical to a fresh build.
 
+The composition itself is pinned too: `test/arch.js` checks that every `src/*.js` is in the build list (core first, `app.js` — the DOM layer — last), that the fuzz harness loads exactly what ships minus `app.js`, and that the model files in between never reference a browser global or timer on *any* path, executed or not — so the headless suite can never quietly diverge from the page.
+
 ## Conventions
 
 Aligned with the W3Schools DSA tutorial:

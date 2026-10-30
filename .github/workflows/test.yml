@@ -22,5 +22,8 @@ jobs:
           git diff --exit-code app.html preview.html
           cmp preview.html index.html
 
+      - name: Architecture rules
+        run: node test/arch.js
+
       - name: Invariant fuzz suite
         run: node test/run.js
